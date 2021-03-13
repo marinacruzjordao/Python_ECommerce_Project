@@ -6,7 +6,7 @@ from django.views import View
 class Pay(View):
     pass
 
-class CloseRequest(View):
+class SaveRequest(View):
     pass
 
 

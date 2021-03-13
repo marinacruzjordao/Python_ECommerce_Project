@@ -4,6 +4,7 @@ from PIL import Image
 import os
 from django.conf import settings
 from django.utils.text import slugify
+from utils import utils
 
 # Create your models here.
 class Product(models.Model):
@@ -22,11 +23,11 @@ class Product(models.Model):
 
     #format the price
     def get_price_format(self):
-        return f'€ {self.price_marketing:.2f}'.replace('.',',')
+        return utils.format_prices(self.price_marketing)
     get_price_format: get_price_format
 
     def get_price_promo_format(self):
-        return f'€ {self.price_marketing_promotion:.2f}'.replace('.',',')
+        return utils.format_prices(self.price_marketing_promotion)
     get_price_promo_format: get_price_promo_format
 
     @staticmethod

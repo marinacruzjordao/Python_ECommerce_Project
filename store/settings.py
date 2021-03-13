@@ -130,7 +130,9 @@ USE_TZ = True
 #to search for the templates
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIR = [os.path.join('templates/static')]
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR,'templates/static')
+]
 
 #to search for the images
 MEDIA_URL = '/media/'
