@@ -50,6 +50,7 @@ class UserForm(forms.ModelForm):
         error_msg_email_exists = 'Email already exists'
         error_msg_password_match = 'Passwords do not match'
         error_msg_password_short = 'Password requires at least 6 characters'
+        error_msg_required_fiedl = 'This is required'
 
 
 
@@ -71,7 +72,24 @@ class UserForm(forms.ModelForm):
                 if len(password_data)<6:
                     validation_error_msgs['password'] = error_msg_password_short
         else:
-            validation_error_msgs['username']='vbla bla'
+            if user_db:
+                validation_error_msgs['username']= error_msg_user_exists
+            
+            if email_db:
+                validation_error_msgs['email'] = error_msg_email_exists
+
+            if not password_data:
+                validation_error_msgs['password'] = error_msg_required_fiedl
+
+            if not password2_data:
+                validation_error_msgs['password2'] = error_msg_required_fiedl
+
+            if password_data != password2_data:
+                validation_error_msgs['password'] = error_msg_password_match
+                validation_error_msgs['password2'] = error_msg_password_match
+            
+            if len(password_data)<6:
+                validation_error_msgs['password'] = error_msg_password_short
 
         if validation_error_msgs:
             raise(forms.ValidationError(validation_error_msgs))
