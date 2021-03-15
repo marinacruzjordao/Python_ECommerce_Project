@@ -20,6 +20,16 @@ class Userprofile(models.Model):
     def clean(self):
         error_messages = {}
 
+        nif_send = self.nif or None
+        nif_saved = None
+        userprofile = Userprofile.objects.filter(nif=nif_send).first()
+
+        if userprofile:
+            nif_saved = userprofile.nif 
+
+            if nif_saved is not None and self.pk != userprofile.pk:
+                error_messages['nif']='This NIF already exists.'
+
         if len(self.zip_code)<8:
             error_messages['zip_code'] = 'Invalid zip code, only 8 characters'
         

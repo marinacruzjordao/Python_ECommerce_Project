@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 class Request(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE) #when user is delete evrything is delete
     total = models.FloatField()
+    qtd_total = models.PositiveBigIntegerField()
     status = models.CharField(  
         default = 'C',
         max_length=1,
@@ -36,3 +37,4 @@ class ItemRequest(models.Model):
       #to show the name of itemrequest in admin pagepk}'
     def __str__(self):
         return f'{self.request} item'
+    

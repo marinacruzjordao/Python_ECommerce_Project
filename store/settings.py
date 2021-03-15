@@ -46,7 +46,7 @@ INSTALLED_APPS = [
 
 
     # Remove debug toolbar
-    'debug_toolbar',
+    #'debug_toolbar',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -62,7 +62,7 @@ MIDDLEWARE = [
 
     
     #Remove debug toolbar
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    #'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'store.urls'
@@ -170,9 +170,9 @@ SESSION_SAVE_EVERY_REQUEST = False
 
 
 #remove debug toolbar
-INTERNAL_IPS = [
+#INTERNAL_IPS = [
     # ...
-    '127.0.0.1',
+#    '127.0.0.1',
     # ...
-]
+#]
 

@@ -9,6 +9,7 @@ from django.db.models import Q
 
 from pprint import pprint
 from . import models
+from userprofile.models import Userprofile
 
 
 # Create your views here.
@@ -17,6 +18,28 @@ class ListProducts(ListView):
     template_name = 'product/list.html'
     context_object_name= 'products'
     paginate_by=3
+    ordering=['-id']
+
+class Search(ListProducts):
+    def get_queryset(self, *args, **kwargs):
+        term = self.request.GET.get('term') or self.request.session['term']
+        qs= super().get_queryset(*args, **kwargs)
+
+        if not term:
+            return qs
+
+        self.request.session['term'] =term
+
+        qs=qs.filter(
+            Q(name__icontains=term) |
+            Q(description_short__icontains=term) |
+            Q(description_long__icontains=term) 
+        )
+
+        self.request.session.save()
+
+        return qs
+    
 
 class DetailProduct(DetailView):
     model = models.Product
@@ -147,4 +170,23 @@ class Cart(View):
         return render(self.request,'product/cart.html', cont)
 
 class Finish(View):
-    pass
+
+    def get(self, *args, **kwargs):
+        if not self.request.user.is_authenticated:
+            return redirect('userprofile:create')
+
+        userprofile = Userprofile.objects.filter(user=self.request.user).exists() # verify if user exists
+        if not userprofile:
+            messages.error(self.request, 'User withou profile.')
+            return redirect('userprofile:create')
+
+        if not self.request.session.get('cart'):
+           messages.error(self.request, 'Empty cart.')
+           return redirect('product:lists')
+            
+
+        cont={
+            'user': self.request.user,
+            'cart': self.request.session['cart'],
+        }
+        return render(self.request,'product/finish.html', cont)

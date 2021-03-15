@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load omfilter %}
+
+{% block title %}Purchase Summary{% endblock %} 
+{% block content %}
+       <div class="row mb-5">
+            <div class="col-lg">
+                <h2>Cart Resume</h2>
+
+                <p class="lead">User Data</p>
+                <p>To edit, <a href="{% url 'userprofile:create' %}">click here</a></p>
+                <dl class="row">
+                    <dt class="col-lg-2">Name:</dt>
+                    <dd class="col-lg-4">{{ user.first_name }}</dd>
+                    <dt class="col-lg-2">Surname:</dt>
+                    <dd class="col-lg-4">{{ user.last_name }}</dd>
+
+                    <dt class="col-lg-2">Age:</dt>
+                    <dd class="col-lg-4">{{ user.userprofile.age }}</dd>
+                    <dt class="col-lg-2">Birth Date:</dt>
+                    <dd class="col-lg-4">{{ user.userprofile.birth_date }}</dd>
+
+                    <dt class="col-lg-2">NIF:</dt>
+                    <dd class="col-lg-4">{{ user.userprofile.nif }}</dd>
+                    <dt class="col-lg-2">E-mail:</dt>
+                    <dd class="col-lg-4">{{ user.email }}</dd>
+                </dl>
+
+                <p class="lead">Address</p>
+                <p>To Edit, <a href="{% url 'userprofile:create' %}">click here</a></p>
+                <dl class="row">
+                    <dt class="col-lg-2">Address:</dt>
+                    <dd class="col-lg-4">{{ user.userprofile.address }}</dd>
+                    <dt class="col-lg-2">Zip Code:</dt>
+                    <dd class="col-lg-4">{{ user.userprofile.zip_code }}</dd>
+
+                    <dt class="col-lg-2">Cidade:</dt>
+                    <dd class="col-lg-4">{{ user.userprofile.city }}</dd>
+
+                </dl>
+            </div>
+        </div>
+
+ <div class="row mt-3">
+            <div class="col">
+                <h3>Cart </h3>
+                <p class="lead">Produtos, quantities and prices selected.</p>
+                {% include 'parciais/_cart.html' %}
+ 
+            </div>
+        </div>
+
+ <div class="row mt-3">
+         <div class="col">
+                <p class="lead text-center"><strong>Cart Total:</strong> {{ cart|cart_totals|format_prices}}</p>
+ 
+            </div>
+       </div>
+
+  
+
+        <div class="row">
+            <div class="col">
+                <a class="btn btn-block btn-primary btn-lg" href="{% url 'request:saverequest' %}">
+                    Place order and pay
+                </a>
+            </div>
+        </div>
+
+
+{% endblock %}

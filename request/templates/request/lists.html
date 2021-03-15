@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load omfilter %}
+
+{% block title %}{{ user }} Request |{% endblock %} 
+
+{% block content %}
+ <div class="row">
+            <div class="col">
+                <h3 class="mb-4">{{ user}} Requests</h3>
+                <p>All your requests in this shop.</p>
+
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <tr>
+                            <th scope="col">Request</th>
+                            <th scope="col">Total</th>
+                            <th scope="col">Qtd. Items</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">More details</th>
+                        </tr>
+
+                        {% for request in requests %}
+                        <tr>
+                            <th scope="row">{{ request }}</td>
+                            <td>{{ request.total|format_prices}}</td>
+                            <td>{{ request.qtd_total }}</td>
+                            <td>{{ request.get_status_display }}</td>
+                            <td>
+                                <a href="{% url 'request:detail' request.id %}">
+                                    Ver <i class="fas fa-search-plus ml-2"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                        <tr>
+                            <th scope="row">Pedido N. 10</td>
+                            <td>R$ 54,90</td>
+                            <td>1</td>
+                            <td>Criado</td>
+                            <td>
+                                <a href="/pedido/detalhe/10">
+                                    Ver <i class="fas fa-search-plus ml-2"></i>
+                                </a>
+                            </td>
+                        </tr>
+
+
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+{% include 'parciais/_pagination.html' %}
+
+{% endblock %}

@@ -20,18 +20,15 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('', include('product.urls')), #main page
-    path('userprofile/', include('userprofile.urls')), #main page
-    path('request', include('request.urls')),#main page
-
-
+    path('userprofile/', include('userprofile.urls')), 
+    path('request/', include('request.urls')),
     path('admin/', admin.site.urls),
-
-
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  #for image
 
+
 #remove debug toolbar
-if settings.DEBUG:
-    import debug_toolbar
-    urlpatterns=[    
-        path('__debug__/', include(debug_toolbar.urls)),] + urlpatterns
+#if settings.DEBUG:
+#    import debug_toolbar
+#    urlpatterns=[    
+#        path('__debug__/', include(debug_toolbar.urls)),] + urlpatterns
